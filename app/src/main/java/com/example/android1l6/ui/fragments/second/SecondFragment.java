@@ -7,15 +7,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.android1l6.R;
 import com.example.android1l6.databinding.SecondFragmentBinding;
 import com.example.android1l6.model.ModelData;
 import com.example.android1l6.ui.fragments.first.FirstFragment;
 
+import java.util.Locale;
 import java.util.Timer;
 
 public class SecondFragment extends Fragment {
@@ -36,17 +39,30 @@ public class SecondFragment extends Fragment {
         getData();
     }
 
-
-
     private void listeners() {
         binding.btnToSendData.setOnClickListener(new View.OnClickListener() {
+            TextView textView = (TextView) binding.timer;
+            CountDownTimer countDownTimer = new CountDownTimer(6000, 1000) {
+                public void onTick(long millisUntilFinished) {
+                    textView.setText(String.format(Locale.getDefault(), "%d ", millisUntilFinished / 1000L));
+                }
+
+                public void onFinish() {
+                    textView.setText("");
+                    String message = binding.etData.getText().toString().trim();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("sendMessage", message);
+                    FirstFragment firstFragment = new FirstFragment();
+                    firstFragment.setArguments(bundle);
+                    getParentFragmentManager().beginTransaction().replace(R.id.container_fragment, firstFragment).commit();
+                    save();
+                }
+            };
+
             @Override
             public void onClick(View view) {
-                FirstFragment firstFragment = new FirstFragment();
-                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container_fragment1, firstFragment).commit();
-                save();
 
+                countDownTimer.start();
             }
         });
     }
@@ -71,7 +87,6 @@ public class SecondFragment extends Fragment {
             modelData = (ModelData) getArguments().getSerializable("key1");
             binding.etData.setText(modelData.getData());
         }
-
     }
 
     @Override
@@ -79,6 +94,4 @@ public class SecondFragment extends Fragment {
         super.onDestroy();
         binding = null;
     }
-
-
 }
