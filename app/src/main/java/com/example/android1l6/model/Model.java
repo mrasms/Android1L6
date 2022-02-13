@@ -2,10 +2,10 @@ package com.example.android1l6.model;
 
 import java.io.Serializable;
 
-public class ModelData implements Serializable {
-    private  String title;
+public class Model implements Serializable {
+    private String title;
 
-    public ModelData(String title) {
+    public Model(String title) {
         this.title = title;
     }
 

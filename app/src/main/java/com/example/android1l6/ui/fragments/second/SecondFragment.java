@@ -12,23 +12,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android1l6.R;
-import com.example.android1l6.databinding.SecondFragmentBinding;
-import com.example.android1l6.model.ModelData;
+import com.example.android1l6.databinding.FragmentSecondBinding;
+import com.example.android1l6.model.Model;
 import com.example.android1l6.ui.fragments.first.FirstFragment;
 
 import java.util.Locale;
-import java.util.Timer;
 
 public class SecondFragment extends Fragment {
-    ModelData modelData;
-    private SecondFragmentBinding binding;
+    Model modelData;
+    private FragmentSecondBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = SecondFragmentBinding.inflate(inflater, container, false);
+        binding = FragmentSecondBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -42,7 +42,7 @@ public class SecondFragment extends Fragment {
     private void listeners() {
         binding.btnToSendData.setOnClickListener(new View.OnClickListener() {
             TextView textView = (TextView) binding.timer;
-            CountDownTimer countDownTimer = new CountDownTimer(6000, 1000) {
+            CountDownTimer Timer = new CountDownTimer(6000, 1000) {
                 public void onTick(long millisUntilFinished) {
                     textView.setText(String.format(Locale.getDefault(), "%d ", millisUntilFinished / 1000L));
                 }
@@ -61,8 +61,7 @@ public class SecondFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-
-                countDownTimer.start();
+                Timer.start();
             }
         });
     }
@@ -71,8 +70,12 @@ public class SecondFragment extends Fragment {
         String data = binding.etData.getText().toString();
         if (data.isEmpty()) {
             binding.etData.setError("Input text");
+            SecondFragment secondFragment = new SecondFragment();
+            FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container_fragment, secondFragment).commit();
+
         } else {
-            modelData = new ModelData(data);
+            modelData = new Model(data);
             Bundle bundle = new Bundle();
             bundle.putSerializable("key", modelData);
             FirstFragment firstFragment = new FirstFragment();
@@ -84,7 +87,7 @@ public class SecondFragment extends Fragment {
 
     private void getData() {
         if (getArguments() != null) {
-            modelData = (ModelData) getArguments().getSerializable("key1");
+            modelData = (Model) getArguments().getSerializable("key1");
             binding.etData.setText(modelData.getData());
         }
     }

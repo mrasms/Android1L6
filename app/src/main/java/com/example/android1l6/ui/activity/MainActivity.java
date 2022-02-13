@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.example.android1l6.R;
 import com.example.android1l6.ui.fragments.first.FirstFragment;
 import com.example.android1l6.ui.fragments.second.SecondFragment;
+import com.example.android1l6.ui.fragments.third.ThirdFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container_fragment, new FirstFragment()).commit();
+                    .replace(R.id.container_fragment, new ThirdFragment()).commit();
         }
 
         if (savedInstanceState == null) {
@@ -29,4 +30,3 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
-//need to learn commit();

@@ -3,19 +3,18 @@ package com.example.android1l6.ui.fragments.first.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android1l6.databinding.HolderListDataBinding;
 import com.example.android1l6.listener.OnClickListener;
-import com.example.android1l6.model.ModelData;
+import com.example.android1l6.model.Model;
 
 import java.util.ArrayList;
 
-public class DataAdapter extends RecyclerView.Adapter<DataAdapter.HolderData> {
-    public ArrayList<ModelData> list = new ArrayList<>();
+public class Adapter extends RecyclerView.Adapter<Adapter.HolderData> {
+    public ArrayList<Model> list = new ArrayList<>();
     OnClickListener onClickListener;
 
     public void setOnItemClickListener(OnClickListener onItemClickListener) {
@@ -39,8 +38,8 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.HolderData> {
         return list.size();
     }
 
-    public void addData(ModelData modelData) {
-        this.list.add(modelData);
+    public void addData(Model model) {
+        this.list.add(model);
         notifyDataSetChanged();
     }
 
@@ -52,12 +51,12 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.HolderData> {
             this.binding = binding;
         }
 
-        public void onBind(ModelData modelData) {
-            binding.tvData.setText(modelData.getData());
+        public void onBind(Model model) {
+            binding.tvData.setText(model.getData());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onClickListener.onItemClickListener(getAdapterPosition(), modelData);
+                    onClickListener.onItemClickListener(getAdapterPosition(), model);
                 }
             });
 
