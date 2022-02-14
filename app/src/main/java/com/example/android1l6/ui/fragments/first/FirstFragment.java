@@ -59,7 +59,7 @@ public class FirstFragment extends Fragment {
                 SecondFragment secondFragment = new SecondFragment();
                 FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container_fragment, secondFragment).commit();
-                Model modelData1 = new Model(adapterData.list.get(position).getData());
+                Model modelData1 = new Model(adapterData.list.get(position).getData().trim());
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("key1", modelData1);
                 secondFragment.setArguments(bundle);

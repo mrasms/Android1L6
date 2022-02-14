@@ -67,7 +67,7 @@ public class SecondFragment extends Fragment {
     }
 
     private void save() {
-        String data = binding.etData.getText().toString();
+        String data = binding.etData.getText().toString().trim();
         if (data.isEmpty()) {
             binding.etData.setError("Input text");
             SecondFragment secondFragment = new SecondFragment();
